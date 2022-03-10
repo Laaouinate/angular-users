@@ -1,0 +1,50 @@
+.fa.fa-info-circle {
+    color: blue;
+}
+
+.text-justify {
+    text-transform: capitalize;
+    font-weight: bold;
+    font-size: 30px;
+}
+
+#first-name {
+    margin-left: 58px;
+}
+
+#last-name {
+    margin-left: 60px;
+}
+
+#email {
+    margin-left: 38px;
+}
+
+#phone {
+    margin-left: 27px;
+}
+
+.first {
+    margin-bottom:7px ;
+}
+
+.last {
+    margin-bottom:7px ;
+}
+
+.email {
+    margin-bottom:7px ;
+}
+
+.phone {
+    margin-bottom:7px ;
+}
+
+.modal-header {
+    justify-content: center;
+}
+
+.fa-trash:before {
+    margin-left: 30px;
+    color:red;
+}

@@ -1,0 +1,126 @@
+<div class="container">
+    <div class="row">
+    
+        <div  class="mx-auto" style="width: 200px;">
+            <div class="text-justify text-break">Users List</div>
+        </div>
+
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text">
+                    <i class="fa fa-search" aria-hidden="true"></i>
+                </span>
+            </div>
+            <input type="text" class="form-control" placeholder="Search" (input)='search($event)' >
+        <!-- Button trigger modal -->
+        </div>
+        <div>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+            <i class="fa fa-plus" aria-hidden="true"></i>
+        </button>
+    </div>    
+        <!-- modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title  w-100 text-center" id="exampleModalLabel">Add User</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+                    <form class="form-inline" [formGroup]="userForm">
+                        <div class="form-group first">
+                          <label>First Name:</label>
+                          <input type="text" class="form-control" id="first-name"  formControlName="firstName">
+                          <div *ngIf="userForm.get('firstName').invalid &&  userForm.get('firstName').errors && 
+                          (userForm.get('firstName').dirty || userForm.get('firstName').touched)">
+                          <small class="text-danger" *ngIf="userForm.get('firstName').hasError('required')">
+                          This field is required.
+                          </small>
+                          </div>
+                        </div>
+                        
+                        <div class="form-group last">
+                            <label>Last Name:</label>
+                            <input type="text" class="form-control" id="last-name" formControlName="lastName">
+                            <div *ngIf="userForm.get('lastName').invalid &&  userForm.get('lastName').errors && 
+                            (userForm.get('lastName').dirty || userForm.get('lastName').touched)">
+                            <small class="text-danger" *ngIf="userForm.get('lastName').hasError('required')">
+                            This field is required.
+                            </small>
+                            </div>
+                        </div>
+
+                        <div class="form-group email">
+                            <label>Email address:</label>
+                            <input type="email" class="form-control" id="email" formControlName="email">
+                            <div *ngIf="userForm.get('email').invalid &&  userForm.get('email').errors && 
+                            (userForm.get('email').dirty || userForm.get('email').touched)">
+                            <small class="text-danger" *ngIf="userForm.get('email').hasError('required')">
+                            This field is required.
+                            </small>
+                            </div>
+                        </div>
+
+                        <div class="form-group phone">
+                          <label>Number Phone:</label>
+                          <input type="text" class="form-control" id="phone" formControlName="phoneNumber">
+                          <div *ngIf="userForm.get('phoneNumber').invalid &&  userForm.get('phoneNumber').errors && 
+                          (userForm.get('phoneNumber').dirty || userForm.get('phoneNumber').touched)">
+                          <small class="text-danger" *ngIf="userForm.get('phoneNumber').hasError('required')">
+                          This field is required.
+                          </small>
+                          </div>
+                        </div>
+                      </form>
+                      <div class="modal-footer">
+                        <button (click)="Clean()" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button (click)="Save()" type="button" class="btn btn-primary" [disabled]="!userForm.valid"  data-dismiss="modal">Save</button>
+                      </div>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <div *ngIf="users?.length != 0" class="table-responsive mt-3">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">first Name</th>
+                    <th scope="col">last Name</th>
+                    <th scope="col">Details</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                <tr  *ngFor="let user of users | paginate : {
+                    itemsPerPage: tableSize,
+                    currentPage: page,
+                    totalItems: count
+                  }; " >
+        
+                    <td scope="row">{{ user.firstName }}</td>
+                    <td>{{ user.lastName }}</td>
+                    <td>
+                        <i class="fa fa-info-circle" aria-hidden="true"></i>
+                        <i class="fa fa-trash" aria-hidden="true" (click)="deleteUser(user.id)"></i>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="d-flex justify-content-center">
+                <pagination-controls 
+                  responsive="true" 
+                  previousLabel="Prev" 
+                  nextLabel="Next" 
+                  (pageChange)="onTableDataChange($event)">
+                </pagination-controls>
+              </div>
+        </div>
+        <div  *ngIf="users?.length == 0" class="alert alert-danger col-lg-12" role="alert">
+           <p class="text-center">No Data</p>
+        </div>
+    </div>
+</div>
